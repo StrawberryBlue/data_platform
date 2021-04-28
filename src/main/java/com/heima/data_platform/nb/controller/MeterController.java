@@ -2,7 +2,7 @@ package com.heima.data_platform.nb.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.heima.data_platform.nb.common.Meter;
-import com.heima.data_platform.nb.common.Result;
+import com.heima.data_platform.common.Result;
 import com.heima.data_platform.properties.Constant;
 import com.heima.data_platform.nb.service.MeterService;
 import lombok.extern.slf4j.Slf4j;

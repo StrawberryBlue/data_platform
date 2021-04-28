@@ -1,4 +1,4 @@
-package com.heima.data_platform.nb.common;
+package com.heima.data_platform.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.heima.data_platform.nb.controller;
 
-import com.heima.data_platform.nb.common.Result;
+import com.heima.data_platform.common.Result;
 import com.heima.data_platform.nb.common.User;
 import com.heima.data_platform.properties.Constant;
 import com.heima.data_platform.nb.service.UserService;

@@ -2,7 +2,7 @@ package com.heima.data_platform.emp.controller;
 
 import com.heima.data_platform.emp.common.Group;
 import com.heima.data_platform.emp.service.GroupService;
-import com.heima.data_platform.nb.common.Result;
+import com.heima.data_platform.common.Result;
 import com.heima.data_platform.nb.common.User;
 import com.heima.data_platform.util.CheckUtil;
 import lombok.extern.slf4j.Slf4j;
