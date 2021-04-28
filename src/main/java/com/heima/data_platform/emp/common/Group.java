@@ -20,4 +20,5 @@ public class Group {
     private String operate_by;
     private String update_time;
     private boolean enable;
+    private boolean deleted;
 }
