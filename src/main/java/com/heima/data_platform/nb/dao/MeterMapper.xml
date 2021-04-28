@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.heima.data_platform.nb.dao.MeterMapper">
+
+    <sql id="real">select id, SheiBeiID as deviceId,BiaoHao as meterNum, ZhouQi as cycle,
+                           WenDu as temp,ShiDu as wet,V as voltage,XinHao as signalNum,
+                           YiDongBJ as isMove,BanBen as version,SheBeiTime as newCycle,
+                           QuYu as area,Date as date,IMEI from realtime</sql>
+    <sql id="his">select id, SheiBeiID as deviceId,BiaoHao as meterNum, ZhouQi as cycle,
+                          WenDu as temp,ShiDu as wet,V as voltage,XinHao as signalNum,
+                          YiDongBJ as isMove,BanBen as version,SheBeiTime as newCycle,
+                          QuYu as area,Date as date,IMEI from histime</sql>
+
+    <select id="getAllMeter" resultType="com.heima.data_platform.nb.common.Meter">
+        <include refid="real"></include>
+        <where>
+            1=1
+            <if test="'all'.toString() != mark">and QuYu = #{mark}</if>
+            <if test="dateStart != null and dateStart !=''"> and  realtime.Date >  #{dateStart} </if>
+            <if test="dateEnd != null and dateEnd !='' "> and realtime.Date &lt; #{dateEnd}</if>
+            <if test="meterNum != null and meterNum !='' "> and BiaoHao = #{meterNum}</if>
+        </where>
+
+    </select>
+
+    <select id="getHisMeter" resultType="com.heima.data_platform.nb.common.Meter">
+        <include refid="his"></include>
+        <where>
+            1=1
+            <if test="'all'.toString() != mark">and QuYu = #{mark}</if>
+            <if test="dateStart != null and dateStart !=''"> and  histime.Date >  #{dateStart} </if>
+            <if test="dateEnd != null and dateEnd !='' "> and histime.Date &lt; #{dateEnd}</if>
+            <if test="meterNum != null and meterNum !='' "> and BiaoHao = #{meterNum}</if>
+        </where>
+    </select>
+
+    <insert id="addHisMeter">
+        insert into histime(SheiBeiID,BiaoHao,ZhouQi,WenDu,ShiDu,V,XinHao,YiDongBJ,BanBen,SheBeiTime,Date,QuYu,IMEI)
+        values (#{deviceId},#{meterNum},#{cycle},#{temp},#{wet},#{voltage},#{signalNum},#{isMove},#{version},#{newCycle},#{date},#{area},#{IMEI})
+    </insert>
+
+    <select id="getLastHisMeterDate" resultType="String">
+        select Date from histime where BiaoHao = #{meterNum} ORDER BY Date DESC LIMIT 1
+    </select>
+</mapper>
