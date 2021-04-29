@@ -21,6 +21,6 @@
     <select id="getEnterprise" resultType="com.heima.data_platform.emp.common.Enterprise">
         select A.id, A.group_id, A.enterprise, A.addr, A.director, A.phone, A.simple_name, A.create_time, A.operate_by, A.update_time, A.enable, A.deleted,B.name as group_name from emp_ent A
         LEFT JOIN emp_group B ON A.group_id = B.id where A.deleted = 0
-        <if test="group_id != null"> and group_id = #{group_id}</if>
+        <if test="group_id != null"> and A.group_id = #{group_id}</if>
     </select>
 </mapper>

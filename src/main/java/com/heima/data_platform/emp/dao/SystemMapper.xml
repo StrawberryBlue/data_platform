@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.heima.data_platform.emp.dao.SystemMapper">
+
+    <select id="getSystem" resultType="com.heima.data_platform.emp.common.System">
+        select A.id, A.ent_id, A.name, A.create_time, A.operate_by, A.update_time, A.mark_name, A.deleted, B.enterprise as ent_name from emp_system A
+        LEFT JOIN emp_ent B ON A.ent_id = B.id where A.deleted = 0
+        <if test="ent_id != null"> and A.ent_id = #{ent_id}</if>
+    </select>
+
+    <update id="updateSystem">
+        update emp_system  set update_time = #{update_time},operate_by = #{operate_by}
+        <if test="ent_id != null and ent_id != ''">,ent_id = #{group_id}</if>
+        <if test="name != null and name != ''">,name = #{name}</if>
+        <if test="mark_name != null and mark_name != ''">,mark_name = #{mark_name}</if>
+        <if test="deleted != null ">,deleted = #{deleted}</if>
+        where id = #{id}
+    </update>
+</mapper>

@@ -71,4 +71,8 @@ public class EnterpriseService {
         enterprise.setUpdate_time(now);
         enterpriseMapper.updateEnterprise(enterprise);
     }
+
+    public String getGroupNameByEntId(Integer id){
+        return enterpriseMapper.getGroupNameByEntId(id);
+    }
 }

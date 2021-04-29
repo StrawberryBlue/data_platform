@@ -51,4 +51,7 @@ public interface EnterpriseMapper {
      */
     @Select("select id from emp_ent where group_id = #{id} ")
     List<Integer> getEntIds(int id);
+
+    @Select("select name from emp_group WHERE id = (SELECT group_id FROM emp_ent WHERE id = #{id} )")
+    String getGroupNameByEntId(Integer id);
 }
