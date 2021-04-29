@@ -80,6 +80,7 @@ public class SystemController {
     @RequestMapping("/update")
     public Result updateSystem(System system,@RequestParam("token") String token){
         User redisUser = checkUtil.getRedisUser(token);
+        log.info("///////////////"+system);
         if (redisUser!=null) {
             try {
                 system.setOperate_by(redisUser.getUsername());

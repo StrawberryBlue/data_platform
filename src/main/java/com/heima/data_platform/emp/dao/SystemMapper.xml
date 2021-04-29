@@ -13,8 +13,8 @@
 
     <update id="updateSystem">
         update emp_system  set update_time = #{update_time},operate_by = #{operate_by}
-        <if test="ent_id != null and ent_id != ''">,ent_id = #{group_id}</if>
         <if test="name != null and name != ''">,name = #{name}</if>
+        <if test="ent_id != null">,ent_id = #{ent_id}</if>
         <if test="mark_name != null and mark_name != ''">,mark_name = #{mark_name}</if>
         <if test="deleted != null ">,deleted = #{deleted}</if>
         where id = #{id}

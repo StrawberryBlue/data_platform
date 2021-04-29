@@ -75,6 +75,8 @@ public class SystemService {
     public void updateSystem(System system) {
         String now = DateUtil.now();
         system.setUpdate_time(now);
+
+        log.info(">>>>>>>>>>:"+system);
         systemMapper.updateSystem(system);
     }
 }
