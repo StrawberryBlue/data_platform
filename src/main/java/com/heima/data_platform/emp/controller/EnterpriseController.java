@@ -1,8 +1,8 @@
 package com.heima.data_platform.emp.controller;
 
-import com.heima.data_platform.emp.common.Group;
-import com.heima.data_platform.emp.service.GroupService;
 import com.heima.data_platform.common.Result;
+import com.heima.data_platform.emp.common.Enterprise;
+import com.heima.data_platform.emp.service.EnterpriseService;
 import com.heima.data_platform.nb.common.User;
 import com.heima.data_platform.util.CheckUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -15,36 +15,36 @@ import java.util.List;
 
 /**
  * @author ：wt
- * @date ：Created in 2021-04-28 14:35
- * @description：
+ * @date ：Created in 2021-04-29 8:55
+ * @description： 企业相关
  * @modified By：wt
  */
 @Slf4j
 @RestController
-@RequestMapping("/group")
-public class GroupController {
-    private final GroupService groupService;
+@RequestMapping("/ent")
+public class EnterpriseController {
+    private final EnterpriseService enterpriseService;
     final CheckUtil checkUtil;
     @Autowired
-    public GroupController(GroupService groupService, CheckUtil checkUtil) {
-        this.groupService = groupService;
+    public EnterpriseController(EnterpriseService enterpriseService, CheckUtil checkUtil) {
+        this.enterpriseService = enterpriseService;
         this.checkUtil = checkUtil;
     }
 
     /**
-     * 添加集团
-     * @param group group
-     * @param token tokne
+     * 添加企业
+     * @param enterprise enterprise
+     * @param token token
      * @return
      */
     @RequestMapping("/add")
-    public Result addGroup(Group group,@RequestParam String token){
+    public Result addGroup(Enterprise enterprise, @RequestParam String token){
         //log.info("group>>>>>{}+token>>>>>>{}",group,token);
         User redisUser = checkUtil.getRedisUser(token);
         if (redisUser!=null){
             try {
-                group.setOperate_by(redisUser.getUsername());
-                groupService.addGroup(group);
+                enterprise.setOperate_by(redisUser.getUsername());
+                enterpriseService.addEnterprise(enterprise);
                 return new Result(200,"添加成功");
             }catch (Exception e){
                 e.printStackTrace();
@@ -55,22 +55,22 @@ public class GroupController {
     }
 
     /**
-     * 获取所有集团
-     * @return
+     * 获取所有企业
+     * @return result
      */
     @RequestMapping("/get")
     public Result getGroup(String token,@RequestParam(defaultValue = "1",value = "page") Integer pageNum, @RequestParam(defaultValue = "10",value = "limit") Integer pageSize){
-        List<Group> groups = groupService.getGroup(pageNum,pageSize);
-        if (groups!=null&&groups.size()>0){
-            return new Result(200,"获取成功",groups);
+        List<Enterprise> enterprises = enterpriseService.getEnterprise(pageNum,pageSize);
+        if (enterprises!=null&&enterprises.size()>0){
+            return new Result(200,"获取成功",enterprises);
         }
         return new Result(0,"获取失败");
     }
 
     /**
-     * 通过id删除集团
+     * 通过id删除企业
      * @param id id
-     * @return
+     * @return result
      */
     @RequestMapping("/delete")
     public Result deleteGroup(int id,@RequestParam("token") String token){
@@ -78,7 +78,7 @@ public class GroupController {
             return new Result(0,"没有权限");
         }
         try {
-            groupService.deleteGroup(id);
+            enterpriseService.deleteEnterprise(id);
             return new Result(200,"删除成功");
         }catch (Exception e){
             e.printStackTrace();
@@ -87,18 +87,18 @@ public class GroupController {
     }
 
     /**
-     * 更新集团信息
-     * @param group group
+     * 更新企业信息
+     * @param enterprise enterprise
      * @param token token
-     * @return
+     * @return result
      */
     @RequestMapping("/update")
-    public Result updateGroup(Group group,@RequestParam("token") String token){
+    public Result updateGroup(Enterprise enterprise,@RequestParam("token") String token){
         User redisUser = checkUtil.getRedisUser(token);
         if (redisUser!=null) {
             try {
-                group.setOperate_by(redisUser.getUsername());
-                groupService.updateGroup(group);
+                enterprise.setOperate_by(redisUser.getUsername());
+                enterpriseService.updateEnterprise(enterprise);
                 return new Result(200, "更新成功");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,4 +106,5 @@ public class GroupController {
         }
         return new Result(0,"更新失败");
     }
+
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.heima.data_platform.emp.dao.EnterpriseMapper">
+
+    <update id="updateEnterprise">
+        update emp_ent  set update_time = #{update_time},operate_by = #{operate_by}
+        <if test="group_id != null and group_id != ''">,group_id = #{group_id}</if>
+        <if test="enterprise != null and enterprise != ''">,enterprise = #{enterprise}</if>
+        <if test="addr != null and addr != ''">,addr = #{addr}</if>
+        <if test="director != null and director != ''">,director = #{director}</if>
+        <if test="phone != null and phone != ''">,phone = #{phone}</if>
+        <if test="simple_name != null and simple_name != ''">,simple_name = #{simple_name}</if>
+        <if test="enable != null and enable != ''">,enable = #{enable}</if>
+        <if test="deleted != null and deleted != ''">,deleted = #{deleted}</if>
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,6 +1,5 @@
 package com.heima.data_platform.emp.service;
 
-import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.heima.data_platform.emp.common.Group;
@@ -28,8 +27,8 @@ public class GroupService {
 
     /**
      * 添加集团信息
-     * @param group
-     * @return
+     * @param group group
+     * @return void
      */
     public void addGroup(Group group){
         String now = DateUtil.now();
@@ -43,7 +42,7 @@ public class GroupService {
 
     /**
      * 获取所有集团
-     * @return
+     * @return list
      */
     public List<Group> getGroup(Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -53,7 +52,7 @@ public class GroupService {
 
     /**
      * 删除集团
-     * @param id
+     * @param id id
      */
     public void deleteGroup(int id) {
         int i = groupMapper.changeDelete(id);
@@ -62,7 +61,7 @@ public class GroupService {
 
     /**
      * 更新集团信息
-     * @param group
+     * @param group group
      */
     public void updateGroup(Group group) {
         String now = DateUtil.now();
