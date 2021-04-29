@@ -1,5 +1,6 @@
 package com.heima.data_platform.emp.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.heima.data_platform.common.Result;
 import com.heima.data_platform.emp.common.Enterprise;
 import com.heima.data_platform.emp.service.EnterpriseService;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author ：wt
@@ -59,9 +58,9 @@ public class EnterpriseController {
      * @return result
      */
     @RequestMapping("/get")
-    public Result getGroup(String token,@RequestParam(defaultValue = "1",value = "page") Integer pageNum, @RequestParam(defaultValue = "10",value = "limit") Integer pageSize){
-        List<Enterprise> enterprises = enterpriseService.getEnterprise(pageNum,pageSize);
-        if (enterprises!=null&&enterprises.size()>0){
+    public Result getGroup(Enterprise enterprise,String token,@RequestParam(defaultValue = "1",value = "page") Integer pageNum, @RequestParam(defaultValue = "10",value = "limit") Integer pageSize){
+        PageInfo<Enterprise> enterprises = enterpriseService.getEnterprise(pageNum,pageSize,enterprise);
+        if (enterprises!=null){
             return new Result(200,"获取成功",enterprises);
         }
         return new Result(0,"获取失败");
@@ -92,6 +91,7 @@ public class EnterpriseController {
      * @param token token
      * @return result
      */
+
     @RequestMapping("/update")
     public Result updateGroup(Enterprise enterprise,@RequestParam("token") String token){
         User redisUser = checkUtil.getRedisUser(token);

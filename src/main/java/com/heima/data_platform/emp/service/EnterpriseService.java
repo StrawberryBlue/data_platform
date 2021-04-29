@@ -2,6 +2,7 @@ package com.heima.data_platform.emp.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.heima.data_platform.emp.common.Enterprise;
 import com.heima.data_platform.emp.dao.EnterpriseMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -44,10 +45,11 @@ public class EnterpriseService {
      * 获取所有企业
      * @return list
      */
-    public List<Enterprise> getEnterprise(Integer pageNum, Integer pageSize) {
+    public PageInfo<Enterprise> getEnterprise(Integer pageNum, Integer pageSize,Enterprise enterprise) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Enterprise> enterprises = enterpriseMapper.getEnterprise();
-        return enterprises;
+        List<Enterprise> enterprises = enterpriseMapper.getEnterprise(enterprise);
+        PageInfo<Enterprise> pageInfo = new PageInfo<Enterprise>(enterprises);
+        return pageInfo;
     }
 
     /**

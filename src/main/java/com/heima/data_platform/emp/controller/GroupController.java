@@ -1,5 +1,6 @@
 package com.heima.data_platform.emp.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.heima.data_platform.emp.common.Group;
 import com.heima.data_platform.emp.service.GroupService;
 import com.heima.data_platform.common.Result;
@@ -60,8 +61,8 @@ public class GroupController {
      */
     @RequestMapping("/get")
     public Result getGroup(String token,@RequestParam(defaultValue = "1",value = "page") Integer pageNum, @RequestParam(defaultValue = "10",value = "limit") Integer pageSize){
-        List<Group> groups = groupService.getGroup(pageNum,pageSize);
-        if (groups!=null&&groups.size()>0){
+        PageInfo<Group> groups = groupService.getGroup(pageNum,pageSize);
+        if (groups!=null){
             return new Result(200,"获取成功",groups);
         }
         return new Result(0,"获取失败");

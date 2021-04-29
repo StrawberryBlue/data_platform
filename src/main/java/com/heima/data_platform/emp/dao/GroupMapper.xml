@@ -8,10 +8,10 @@
     <update id="updateGroup">
         update emp_group  set update_time = #{update_time},operate_by = #{operate_by}
         <if test="name != null and name != ''">,name = #{name}</if>
-        <if test="addr != null and name != ''">,addr = #{addr}</if>
-        <if test="ascription != null and name != ''">,ascription = #{ascription}</if>
-        <if test="enable != null and name != ''">,enable = #{enable}</if>
-        <if test="deleted != null and name != ''">,deleted = #{deleted}</if>
+        <if test="addr != null and addr != ''">,addr = #{addr}</if>
+        <if test="ascription != null and ascription != ''">,ascription = #{ascription}</if>
+        <if test="enable != null">,enable = #{enable}</if>
+        <if test="deleted != null">,deleted = #{deleted}</if>
         where id = #{id}
     </update>
 </mapper>

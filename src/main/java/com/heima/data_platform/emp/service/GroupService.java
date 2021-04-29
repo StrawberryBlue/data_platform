@@ -2,8 +2,11 @@ package com.heima.data_platform.emp.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.heima.data_platform.emp.common.Group;
+import com.heima.data_platform.emp.dao.EnterpriseMapper;
 import com.heima.data_platform.emp.dao.GroupMapper;
+import com.heima.data_platform.nb.common.Meter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +23,11 @@ import java.util.List;
 @Slf4j
 public class GroupService {
     final GroupMapper groupMapper;
+    final EnterpriseMapper enterpriseMapper;
     @Autowired
-    public GroupService(GroupMapper groupMapper) {
+    public GroupService(GroupMapper groupMapper, EnterpriseMapper enterpriseMapper) {
         this.groupMapper = groupMapper;
+        this.enterpriseMapper = enterpriseMapper;
     }
 
     /**
@@ -44,10 +49,11 @@ public class GroupService {
      * 获取所有集团
      * @return list
      */
-    public List<Group> getGroup(Integer pageNum,Integer pageSize) {
+    public PageInfo<Group> getGroup(Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Group> groups = groupMapper.getGroup();
-        return groups;
+        PageInfo<Group> pageInfo = new PageInfo<Group>(groups);
+        return pageInfo;
     }
 
     /**
@@ -57,6 +63,11 @@ public class GroupService {
     public void deleteGroup(int id) {
         int i = groupMapper.changeDelete(id);
         log.info("有{}条数据被更改",i);
+        //删除集团下属公司
+        List<Integer> entIds = enterpriseMapper.getEntIds(id);
+        for (Integer entId : entIds) {
+            enterpriseMapper.changeDelete(entId);
+        }
     }
 
     /**

@@ -13,8 +13,15 @@
         <if test="director != null and director != ''">,director = #{director}</if>
         <if test="phone != null and phone != ''">,phone = #{phone}</if>
         <if test="simple_name != null and simple_name != ''">,simple_name = #{simple_name}</if>
-        <if test="enable != null and enable != ''">,enable = #{enable}</if>
-        <if test="deleted != null and deleted != ''">,deleted = #{deleted}</if>
+        <if test="enable != null">,enable = #{enable}</if>
+        <if test="deleted != null">,deleted = #{deleted}</if>
         where id = #{id}
     </update>
+
+    <select id="getEnterprise" resultType="com.heima.data_platform.emp.common.Enterprise">
+        select A.id, A.group_id, A.enterprise, A.addr, A.director, A.phone, A.simple_name, A.create_time, A.operate_by, A.update_time, A.enable, A.deleted from emp_ent A
+        LEFT JOIN emp_group B ON A.group_id = B.id
+        where deleted = 0
+        <if test="group_id != null"> and group_id = #{group_id}</if>
+    </select>
 </mapper>
